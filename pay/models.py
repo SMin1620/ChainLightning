@@ -15,6 +15,22 @@ class Pay(models.Model):
         return f'{self.id} : {self.name}'
 
 
+# 결제 오더 클래스
+class Order(models.Model):
+    cost = models.PositiveIntegerField('결제 오더 금액')
+    status = models.BooleanField('결제 완료 여부', default=False)
+    created_at = models.DateTimeField('결제 오더 날짜', auto_now_add=True)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pay = models.ForeignKey(Pay, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        db_table = 'order'
+
+    def __str__(self):
+        return f'id : {self.id} / user : {self.user.username} / pay : {self.pay.name}'
+
+
 # 결제 히스토리 클래스
 class Payment(models.Model):
     cost = models.PositiveIntegerField('결제 지불 금액', default=0)
@@ -23,6 +39,7 @@ class Payment(models.Model):
 
     pay = models.ForeignKey(Pay, on_delete=models.DO_NOTHING)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
 
     class Meta:
         db_table = 'payment'
@@ -38,5 +55,10 @@ class Charge(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     coupon = models.ForeignKey(Coupon, on_delete=models.DO_NOTHING)
 
+    class Meta:
+        db_table = 'charge'
+
     def __str__(self):
         return f'id : {self.id} / user : {self.user.username} / coupon : {self.coupon.name}'
+
+
