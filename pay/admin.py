@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from pay.models import Pay, Payment, Charge
+
+admin.site.register(Pay)
+admin.site.register(Payment)
+admin.site.register(Charge)

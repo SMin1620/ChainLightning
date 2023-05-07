@@ -5,11 +5,10 @@ from coupon.views import (
     CouponListViewSet
 )
 
-coupon_list_create = CouponListViewSet.as_view({
+coupon_list = CouponListViewSet.as_view({
     'get': 'list',
-    'post': 'create',
 })
 
 urlpatterns = [
-    path('', coupon_list_create, name='coupon_list_create'),
+    path('', coupon_list, name='coupon_list'),
 ]

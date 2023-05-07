@@ -1,6 +1,7 @@
 from django.db import models
 
 # 결제 방식 클래스
+from coupon.models import Coupon
 from user.models import User
 
 
@@ -32,8 +33,10 @@ class Payment(models.Model):
 
 # 사용자가 결제 수단 선택 후 선불금 충전하는 클래스
 class Charge(models.Model):
-    cost = models.PositiveIntegerField('선불금 충전 금액', default=0)
     created_at = models.DateTimeField('선불금 충전 날짜', auto_now_add=True)
 
-    pay = models.ForeignKey(Pay, on_delete=models.DO_NOTHING)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return f'id : {self.id} / user : {self.user.username} / coupon : {self.coupon.name}'

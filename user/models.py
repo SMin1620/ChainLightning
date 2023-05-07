@@ -18,4 +18,4 @@ class User(AbstractUser):
         db_table = 'user'
 
     def __str__(self):
-        return f'{self.id}, {self.username}, {self.name}'
+        return f'{self.id}, {self.username}, {self.name}, {self.charge_cost}'
